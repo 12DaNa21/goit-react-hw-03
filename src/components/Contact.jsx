@@ -1,15 +1,24 @@
 import css from './Contact.module.css';
-export default function Contact( { data: { id, name, number } , onDelete } ) {
-    return (
-        <div className={css.contacts}>
-            <div  className={css.contact}>
-            <svg className={css.icons} width="16" height="16">
-                  <use href="../assets/icons.svg#icon-phone"></use>
-                </svg>
-            <p className={css.text}>{name}</p>
-            <p className={css.phone}>{number}</p>
-            </div>
-            <button className={css.btn} onClick={() => onDelete(id)}>
+import icons from './icons.svg';
+
+export default function Contact({ data: { id, name, number }, onDelete }) {
+  return (
+    <div className={css.contacts}>
+      <div className={css.contact}>
+        <p className={css.text}>
+          <svg className={css.icon} width="24" height="24">
+            <use href={`${icons}#icon-person`}></use>
+          </svg>
+          {name}
+        </p>
+        <p className={css.phone}>
+          <svg className={css.icon} width="24" height="26">
+            <use href={`${icons}#icon-phone`}></use>
+          </svg>
+          {number}
+        </p>
+      </div>
+            <button className={css.sbmbtn} onClick={() => onDelete(id)}>
         Delete
       </button>
         </div>

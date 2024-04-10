@@ -1,0 +1,15 @@
+.search {
+    max-width: 240px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin: 20px auto;
+    
+   
+}
+.text {
+    font-size: 20px;
+}
+.input {
+    height: 24px;
+}
