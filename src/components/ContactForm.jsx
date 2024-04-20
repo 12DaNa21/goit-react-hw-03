@@ -1,26 +1,37 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useId } from "react";
 import * as Yup from "yup";
-import css from './ContactForm.module.css'
+import css from './ContactForm.module.css';
+
+const regex = {
+  phoneNumber: /^[0-9]{3}[-]{1}[0-9]{2}[-]{1}[0-9]{2}$/,
+}
+
 const FeedbackSchema = Yup.object().shape({
-  username: Yup.string().min(3, "Too Short!").max(50, "Too Long!").required("Required"),
-  phone: Yup.string().required("Required"),
-  
+  name: Yup.string().min(3, "Too Short!").max(50, "Too Long!").required("Required"),
+  number: Yup.string()
+    .min(3, "Too short!")
+    .max(50, "Too long!")
+    .matches(regex.phoneNumber, "Number format: 000-00-00")
+    .required("Required"), 
 });
 
 const initialValues = {
   name: "",
-  phone: "",
-  
+  number: "", 
 };
 
-export default function ContactForm() {
+export default function ContactForm({ onAdd }) {
   const nameFieldId = useId();
-  const phoneFieldId = useId();
- 
+  const numberFieldId = useId();
 
   const handleSubmit = (values, actions) => {
-    console.log(values);
+    const newContact = {
+      id: Math.random().toString(36).substring(7), 
+      name: values.name,
+      number: values.number,
+    };
+    onAdd(newContact); 
     actions.resetForm();
   };
 
@@ -33,18 +44,18 @@ export default function ContactForm() {
       <Form className={css.form}>
         <div>
           <label htmlFor={nameFieldId}>Name</label>
-          <Field className={css.text} type="text" name="username" id={nameFieldId} />
-          <ErrorMessage name="username" component="span" />
+          <Field className={css.text} type="text" name="name" id={nameFieldId} />
+          <ErrorMessage name="name" component="span" />
         </div>
 
         <div>
-          <label htmlFor={phoneFieldId}>Number</label>
-          <Field className={css.text} type="tel" name="phone" id={phoneFieldId} />
-          <ErrorMessage name="phone" component="span" />
+          <label htmlFor={numberFieldId}>Number</label>
+          <Field className={css.text} type="tel" name="number" id={numberFieldId} /> 
+          <ErrorMessage name="number" component="span" /> 
         </div>
 
         <button className={css.addbtn} type="submit">Add Contact</button>
       </Form>
     </Formik>
   );
-};
+}

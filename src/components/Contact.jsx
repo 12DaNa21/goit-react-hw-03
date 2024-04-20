@@ -1,6 +1,8 @@
 import css from './Contact.module.css';
 import icons from './icons.svg';
 
+
+
 export default function Contact({ data: { id, name, number }, onDelete }) {
   return (
     <div className={css.contacts}>
@@ -18,9 +20,9 @@ export default function Contact({ data: { id, name, number }, onDelete }) {
           {number}
         </p>
       </div>
-            <button className={css.sbmbtn} onClick={() => onDelete(id)}>
+      <button className={css.sbmbtn} onClick={() => onDelete(id)}>
         Delete
       </button>
-        </div>
-    );
+    </div>
+  );
 }

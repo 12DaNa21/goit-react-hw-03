@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import css from './App.module.css';
 import initialContacts from '../initialContacts.json';
 import ContactForm from './ContactForm';
@@ -28,13 +28,15 @@ export default function App() {
   const filteredContacts = contacts.filter(contact =>
     contact.name.toLowerCase().includes(filter.toLowerCase())
   );
-
+  useEffect(() => {
+    localStorage.setItem("contacts", JSON.stringify(filteredContacts))
+  })
   return (
-    <div className={css.container}>
+    <>
       <p className={css.heading}>Phonebook</p>
       <ContactForm onAdd={addContact}/>
       <SearchBox value={filter} onChange={handleFilterChange} />
       <ContactList contacts={filteredContacts} onDelete={deleteContact}/>
-    </div>
+    </>
   );
 }
