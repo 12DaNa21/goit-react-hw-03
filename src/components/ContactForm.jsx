@@ -26,12 +26,12 @@ export default function ContactForm({ onAdd }) {
   const numberFieldId = useId();
 
   const handleSubmit = (values, actions) => {
-    const newContact = {
+     
+    onAdd({
       id: Math.random().toString(36).substring(7), 
       name: values.name,
       number: values.number,
-    };
-    onAdd(newContact); 
+    }); 
     actions.resetForm();
   };
 
