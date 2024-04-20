@@ -6,7 +6,10 @@ import SearchBox from './SearchBox';
 import ContactList from './ContactList';
 
 export default function App() {
-  const [contacts, setContacts] = useState(initialContacts);
+  const [contacts, setContacts] = useState(() => {
+    const storedContacts = localStorage.getItem("contacts");
+    return storedContacts ? JSON.parse(storedContacts) : initialContacts;
+  });
   const [filter, setFilter] = useState('');
 
   const addContact = (newContact) => {
@@ -28,9 +31,11 @@ export default function App() {
   const filteredContacts = contacts.filter(contact =>
     contact.name.toLowerCase().includes(filter.toLowerCase())
   );
+
   useEffect(() => {
-    localStorage.setItem("contacts", JSON.stringify(filteredContacts))
-  })
+    localStorage.setItem("contacts", JSON.stringify(contacts));
+  }, [contacts]);
+
   return (
     <>
       <p className={css.heading}>Phonebook</p>
